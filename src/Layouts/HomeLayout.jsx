@@ -18,7 +18,7 @@ const HomeLayout = () => {
                     <Navbar></Navbar>
                 </nav>
             </header>
-            <main className='w-11/12 mx-auto my-3 flex '>
+            <main className='w-11/12 mx-auto my-8 flex gap-6 '>
                 
                 <aside className='w-1/4'>
                     <LeftAside></LeftAside>

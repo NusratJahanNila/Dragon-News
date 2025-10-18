@@ -14,6 +14,7 @@ import CategoryNews from "../Pages/CategoryNews";
       },
       {
         path: '/category/:id',
+        loader:()=> fetch('/news.json'),
         Component: CategoryNews,
       }
     ]

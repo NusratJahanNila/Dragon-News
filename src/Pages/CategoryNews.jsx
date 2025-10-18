@@ -1,12 +1,46 @@
-import React from 'react';
-import { useParams } from 'react-router';
+import {} from 'date-fns/locale';
+import React, { useEffect, useState } from 'react';
+import { useLoaderData, useParams } from 'react-router';
+import NewsCard from '../Components/NewsCard';
 
 const CategoryNews = () => {
     const {id}=useParams();
-    console.log(id)
+    const newsData=useLoaderData();
+    // console.log(newsData);
+    const [categoryNews,setCategoryNews]=useState([]);
+
+    useEffect(()=>{
+        // jodi id=0(all news) hoi ,tahole shob data e dekhate hobe
+        if(id=='0'){
+            setCategoryNews(newsData);
+            return;
+        }
+        // jodi id=1(breaking news) hoi,tahole ajker news gula dekhabo
+        else if(id=='1'){
+            const filternews=newsData.filter(news=>news.others?.is_today_pick==true);
+            setCategoryNews(filternews);
+            return;
+        }
+        // nahole jei category id match hobe ,sheta dekhabo
+        else{
+
+            const filternews=newsData.filter(news=>news.category_id==id);
+            // console.log(filternews)
+            setCategoryNews(filternews)
+            
+        }
+    },[newsData,id])
+    // console.log(id)
     return (
         <div>
-            <h2>Category News</h2>
+            <h2 className='font-semibold mb-5 '>Total <span className='text-secondary'>({categoryNews.length})</span> News Found</h2>
+            <div className='grid grid-cols-1 gap-6'>
+                {
+                    categoryNews.map(news=><NewsCard
+                    news={news}
+                    key={news.id}></NewsCard>)
+                }
+            </div>
         </div>
     );
 };

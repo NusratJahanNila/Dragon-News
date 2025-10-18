@@ -19,14 +19,14 @@ const HomeLayout = () => {
                 </nav>
             </header>
             <main className='w-11/12 mx-auto my-8 flex gap-6 '>
-                
-                <aside className='w-1/4'>
+                {/* sticky top-0 h-fit == to make the sidebar sticky */}
+                <aside className='w-1/4 sticky top-0 h-fit'>
                     <LeftAside></LeftAside>
                 </aside>
                 <section className='main-nav w-2/4'>
                     <Outlet></Outlet>
                 </section>
-                <aside className='w-1/4'>
+                <aside className='w-1/4  sticky top-0 h-fit'>
                     <RightAside></RightAside>
                 </aside>
             </main>

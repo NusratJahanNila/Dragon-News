@@ -13,7 +13,7 @@ const SocialLogin = () => {
                 </button>
 
                 {/* GitHub */}
-                <button className="btn bg-white  mt-3">
+                <button className="btn bg-white  mt-3 hover:bg-black hover:text-white">
                     <Github />
                     Login with GitHub
                 </button>

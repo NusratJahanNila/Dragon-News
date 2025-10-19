@@ -1,7 +1,9 @@
 import { Eye, Share2, Bookmark } from "lucide-react";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
   const {
+    id,
     title,
     author,
     thumbnail_url,
@@ -51,9 +53,10 @@ const NewsCard = ({ news }) => {
 
         <p className="text-sm text-gray-600 mt-3">
           {details.slice(0, 200)}...
-          <span className="text-primary font-medium cursor-pointer hover:underline">
+          {/* Read more a click korle News details page a nia jabe */}
+          <Link to={`/news-details/${id}`} className="text-primary font-medium cursor-pointer hover:underline">
             Read More
-          </span>
+          </Link>
         </p>
       </div>
 

@@ -1,19 +1,50 @@
-import React, { useState } from 'react';
+
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 import { createContext } from 'react';
+import { auth } from '../Firebase/firebase.config';
+
 
 // 1. Create context and export
-export const AuthContext= createContext();
+export const AuthContext = createContext();
 const AuthProvider = ({children}) => {
     // 3.akta state declare kore user er data gula rakho
-    const [user,setUser]=useState({
-        name:'nila',
-        email: 'Nila@g.com'
-    })
+    const [user,setUser]=useState(null);
+    console.log(user);
+// Register
+    const createUser=(email,password)=>{
+        return createUserWithEmailAndPassword(auth,email,password)
+    }
+// LogOut
+    const logout=()=>{
+        return signOut(auth)
+    }
+// Login
+    const login=(email,password)=>{
+        return signInWithEmailAndPassword(auth,email,password)
+    }
+    // ------------------------------------------------------------------------------------------------------------
+    // email password user a set holeo reload korle null hoye jai. Karon kothao save thakche na. tai akta observer set korte hoi jekhane value gula thakbe. Sheta hocche onAuthStateChanged
+
+    useEffect(()=>{
+        const unsubscribe=onAuthStateChanged(auth,(currentUser)=>{
+        //    jodi user thake setUser a set koro 
+        setUser(currentUser);
+        })
+        // onAuthStateChanged function return koro
+        return ()=>{
+            unsubscribe();
+        }
+    },[])
+    // ------------------------------------------------------------------------------------------------------------
     // 4.data gula dia akta object toiry koro 
     const authData={
         // user: user,
         user,
         setUser,
+        createUser,
+        logout, 
+        login,
     }
     // 2. AuthProvider theke AuthContext ke return kore dewa
     // 5. AuthContext a value hishabe obj ta pass koro

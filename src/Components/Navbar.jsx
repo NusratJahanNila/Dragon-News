@@ -5,7 +5,19 @@ import { AuthContext } from '../Provider/AuthProvider';
 const Navbar = () => {
     // to use Auth context
     // 1. use hook dia context er value nia ashte hobe
-    const {user}=use(AuthContext);
+    const { user,logout } = use(AuthContext);
+
+    // Logout 
+    const handleLogout=()=>{
+        logout()
+        .then(()=>{
+            alert('Log Out Successfully!')
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+        
+    }
     return (
         <div className='flex justify-between items-center'>
             <div className="">{user && user.email}</div>
@@ -16,7 +28,14 @@ const Navbar = () => {
             </div>
             <div className="logni-btn flex gap-3">
                 <img src={userImg} alt="user image" />
-                <Link to={'/auth/login'} className='btn btn-primary px-10'>Login</Link>
+                {
+                    // jodi user thake, Logout dekhabe,na thakle login korte bolbe
+                    user ?
+                        <button onClick={handleLogout} className='btn btn-primary px-10'>Logout</button>
+                        :
+                        <Link to={'/auth/login'} className='btn btn-primary px-10'>Login</Link>
+                }
+
             </div>
         </div>
     );

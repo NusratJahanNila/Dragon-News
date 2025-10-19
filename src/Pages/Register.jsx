@@ -1,13 +1,24 @@
-import React, { use } from 'react';
-import { Link } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../Provider/AuthProvider';
 
+
 const Register = () => {
-    const { createUser,setUser } = use(AuthContext);
+    // navigate to home
+    const navigate=useNavigate();
+    // name error
+    const [nameError, setNameError] = useState('');
+    const { createUser, setUser, updateUser } = use(AuthContext);
 
     const handleRegister = e => {
         e.preventDefault();
         const name = e.target.name.value;
+        if (name.length < 4) {
+            setNameError('Name must be more than 3 character!!')
+        }
+        else {
+            setNameError('')
+        };
         const photoURL = e.target.photo.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
@@ -17,9 +28,21 @@ const Register = () => {
             .then((result) => {
                 // Signed up 
                 const user = result.user;
+                updateUser({
+                    displayName: name,
+                    photoURL: photoURL
+                }).then(() => {
+                    // user er data ta setUser dia AuthProvider a pathai dao
+                    setUser({...user,displayName: name,
+                    photoURL: photoURL});
+                    navigate('/')
+                }).catch((error) => {
+                    // An error occurred
+                    console.log(error);
+                    setUser(user)
+                });
                 // console.log(user);
-                // user er data ta setUser dia AuthProvider a pathai dao
-                setUser(user);
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -43,6 +66,9 @@ const Register = () => {
                                 className="input"
                                 placeholder="Enter your name"
                                 required />
+                            {
+                                nameError && <p className='text-sm text-error'>{nameError}</p>
+                            }
                             {/* Photo */}
                             <label className="label">Photo URL</label>
                             <input

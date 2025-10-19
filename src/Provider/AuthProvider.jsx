@@ -1,5 +1,5 @@
 
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { createContext } from 'react';
 import { auth } from '../Firebase/firebase.config';
@@ -8,11 +8,15 @@ import { auth } from '../Firebase/firebase.config';
 // 1. Create context and export
 export const AuthContext = createContext();
 const AuthProvider = ({children}) => {
+    // for page loading-true
+    const [loading,setLoading]=useState(true)
+
     // 3.akta state declare kore user er data gula rakho
     const [user,setUser]=useState(null);
-    console.log(user);
+    console.log(user,loading);
 // Register
     const createUser=(email,password)=>{
+        setLoading(true);
         return createUserWithEmailAndPassword(auth,email,password)
     }
 // LogOut
@@ -21,7 +25,12 @@ const AuthProvider = ({children}) => {
     }
 // Login
     const login=(email,password)=>{
+        setLoading(true);
         return signInWithEmailAndPassword(auth,email,password)
+    }
+// Update User
+    const updateUser=(updatedData)=>{
+        return updateProfile(auth.currentUser,updatedData)
     }
     // ------------------------------------------------------------------------------------------------------------
     // email password user a set holeo reload korle null hoye jai. Karon kothao save thakche na. tai akta observer set korte hoi jekhane value gula thakbe. Sheta hocche onAuthStateChanged
@@ -30,6 +39,8 @@ const AuthProvider = ({children}) => {
         const unsubscribe=onAuthStateChanged(auth,(currentUser)=>{
         //    jodi user thake setUser a set koro 
         setUser(currentUser);
+        // jokhon user thakbe=loading-false
+        setLoading(false);
         })
         // onAuthStateChanged function return koro
         return ()=>{
@@ -45,6 +56,9 @@ const AuthProvider = ({children}) => {
         createUser,
         logout, 
         login,
+        loading,
+        setLoading,
+        updateUser,
     }
     // 2. AuthProvider theke AuthContext ke return kore dewa
     // 5. AuthContext a value hishabe obj ta pass koro

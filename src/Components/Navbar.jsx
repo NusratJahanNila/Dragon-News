@@ -27,7 +27,7 @@ const Navbar = () => {
                 <NavLink to='/career'>Career</NavLink>
             </div>
             <div className="logni-btn flex gap-3">
-                <img src={userImg} alt="user image" />
+                <img src={`${user? user.photoURL : userImg}`} alt="user image" className='w-12 rounded-full'/>
                 {
                     // jodi user thake, Logout dekhabe,na thakle login korte bolbe
                     user ?

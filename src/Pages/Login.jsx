@@ -8,7 +8,7 @@ const Login = () => {
     const { login } = use(AuthContext);
 // login korar por redirect kore news details page a nia jete: 
     const location=useLocation();
-    console.log(location);
+    // console.log(location);
     const navigate=useNavigate();
 
     const handleLogin = (e) => {

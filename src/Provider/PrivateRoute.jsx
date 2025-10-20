@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
     const { user,loading } = use(AuthContext);
     // console.log(user);
     const location=useLocation();
-    console.log(location);
+    // console.log(location);
 
     // --------------------------------------------------
     // login obosthai jodi page reload hoi ,loading dekhabe, login page a nia jabe na

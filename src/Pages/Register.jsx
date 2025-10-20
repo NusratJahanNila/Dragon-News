@@ -22,7 +22,7 @@ const Register = () => {
         const photoURL = e.target.photo.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log({ name, photoURL, email, password });
+        // console.log({ name, photoURL, email, password });
         // function call
         createUser(email, password)
             .then((result) => {
@@ -38,7 +38,7 @@ const Register = () => {
                     navigate('/')
                 }).catch((error) => {
                     // An error occurred
-                    console.log(error);
+                    // console.log(error);
                     setUser(user)
                 });
                 // console.log(user);
@@ -48,7 +48,7 @@ const Register = () => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 alert(errorMessage);
-                console.log(errorCode);
+                // console.log(errorCode);
             });
     }
     return (

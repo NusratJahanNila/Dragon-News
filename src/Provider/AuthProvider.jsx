@@ -13,7 +13,7 @@ const AuthProvider = ({children}) => {
 
     // 3.akta state declare kore user er data gula rakho
     const [user,setUser]=useState(null);
-    console.log(user,loading);
+    // console.log(user,loading);
 // Register
     const createUser=(email,password)=>{
         setLoading(true);
